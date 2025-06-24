@@ -50,7 +50,7 @@ type sshPlugin struct {
 	sshPublicKey string
 
 	// custom SSH port (default 22)
-	sshPort       int
+	sshPort int
 }
 
 // New creates ssh plugin
@@ -92,7 +92,7 @@ func (sp *sshPlugin) OnJobAdd(job *batch.Job) error {
 	if err != nil {
 		return err
 	}
-    // Inject updated SSH config (with correct port)
+	// Inject updated SSH config (with correct port)
 	data[SSHConfig] = []byte(sp.generateSSHConfig(job))
 	if err := helpers.CreateOrUpdateSecret(job, sp.client.KubeClients, data, sp.secretName(job)); err != nil {
 		return fmt.Errorf("create secret for job <%s/%s> with ssh plugin failed for %v",
@@ -254,7 +254,7 @@ func (sp *sshPlugin) generateSSHConfig(job *batch.Job) string {
 	for _, ts := range job.Spec.Tasks {
 		for i := 0; i < int(ts.Replicas); i++ {
 			host := ts.Template.Spec.Hostname
-			sub  := ts.Template.Spec.Subdomain
+			sub := ts.Template.Spec.Subdomain
 			if host == "" {
 				host = jobhelpers.MakePodName(job.Name, ts.Name, i)
 			}
