@@ -57,9 +57,12 @@ func TestSSHPlugin(t *testing.T) {
 			sshPort:        22,
 		},
 		{
-			name:    "--ssh-port=2222",
-			params:  []string{"--ssh-port=2222"},
-			sshPort: 2222,
+			name:           "--ssh-port=2222",
+			params:         []string{"--ssh-port=2222"},
+			sshKeyFilePath: SSHAbsolutePath,
+			sshPrivateKey:  "",
+			sshPublicKey:   "",
+			sshPort:        2222,
 		},
 	}
 
