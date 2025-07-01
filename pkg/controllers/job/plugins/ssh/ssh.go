@@ -253,17 +253,17 @@ func (sp *sshPlugin) generateSSHConfig(job *batch.Job) string {
 	cfg := "StrictHostKeyChecking no\nUserKnownHostsFile /dev/null\n"
 	for _, ts := range job.Spec.Tasks {
 		for i := 0; i < int(ts.Replicas); i++ {
-			host := ts.Template.Spec.Hostname
-			sub := ts.Template.Spec.Subdomain
-			if host == "" {
-				host = jobhelpers.MakePodName(job.Name, ts.Name, i)
+			hostName := ts.Template.Spec.Hostname
+			subdomain := ts.Template.Spec.Subdomain
+			if hostName == "" {
+				hostName = jobhelpers.MakePodName(job.Name, ts.Name, i)
 			}
-			if sub == "" {
-				sub = job.Name
+			if subdomain == "" {
+				subdomain = job.Name
 			}
 
-			cfg += fmt.Sprintf("Host %s\n", host)
-			cfg += fmt.Sprintf("  HostName %s.%s\n", host, sub)
+			cfg += fmt.Sprintf("Host %s\n", hostName)
+			cfg += fmt.Sprintf("  HostName %s.%s\n", hostName, subdomain)
 			cfg += fmt.Sprintf("  Port %d\n", sp.sshPort)
 			if ts.Template.Spec.Hostname != "" {
 				break
