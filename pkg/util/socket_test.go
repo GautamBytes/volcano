@@ -272,4 +272,3 @@ func TestResetPaths(t *testing.T) {
 		mutex.RUnlock()
 	})
 }
-
